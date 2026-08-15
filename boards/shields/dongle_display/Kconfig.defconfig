@@ -78,4 +78,9 @@ choice LV_COLOR_DEPTH
     default LV_COLOR_DEPTH_1
 endchoice
 
+# Disable LVGL default theme so lv_obj_create containers (and the screen)
+# don't draw the default border/background — matches the DYA-fork reference.
+config LV_USE_THEME_DEFAULT
+    default n
+
 endif
