@@ -20,7 +20,7 @@ manifest:
       import: app/west.yml
     - name: zmk-dongle-display
       remote: englmaxi
-      revision: main # use 'v0.3' instead of 'main' if you use have pinned zmk to 'v0.3' or below
+      revision: main # requires ZMK main (Zephyr 4.1 + LVGL 9)
   self:
     path: config
 ```
