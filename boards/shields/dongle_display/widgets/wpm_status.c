@@ -79,6 +79,9 @@ ZMK_SUBSCRIPTION(widget_wpm_status, zmk_wpm_state_changed);
 int zmk_widget_wpm_status_init(struct zmk_widget_wpm_status *widget, lv_obj_t *parent)
 {
     widget->obj = lv_obj_create(parent);
+    lv_obj_set_style_bg_opa(widget->obj, LV_OPA_TRANSP, 0);
+    lv_obj_set_style_border_width(widget->obj, 0, 0);
+
     lv_obj_set_size(widget->obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
 
     lv_obj_t *speedometer = lv_img_create(widget->obj);
