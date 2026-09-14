@@ -136,3 +136,16 @@ CONFIG_LV_Z_VDB_SIZE=32
 ## Alternatives
 - [Prospector](https://github.com/carrefinho/prospector) by @carrefinho
 - [YADS](https://github.com/janpfischer/zmk-dongle-screen) by @janpfischer
+
+## Eight-ball stage (fork addition)
+
+Set `CONFIG_ZMK_DONGLE_DISPLAY_EIGHT_BALL=y` to replace the bongo cat with a stage that shows
+a WPM number and sparkline while typing, and a rolling eight-ball while the pointer moves on the
+scroll layer (`CONFIG_ZMK_DONGLE_DISPLAY_SCROLL_LAYER`, default 1). Name the pointer device in your
+central overlay:
+
+    / { chosen { zmk,dongle-display-pointer = &trackball_split; }; };
+
+Other options: `..._TYPING_STATS`, `..._TYPING_TIMEOUT_MS`, `..._SCROLL_TIMEOUT_MS`,
+`..._EIGHT_BALL_STEP_DIV`, `..._EIGHT_BALL_AXIS_X`. Regenerate frames with
+`python3 tools/gen_eight_ball.py`.
