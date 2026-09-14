@@ -81,14 +81,14 @@ int zmk_widget_typing_stats_init(struct zmk_widget_typing_stats *widget, lv_obj_
     /* Fixed positions: the number grows to three 8 px glyphs, the unit sits past that. */
     widget->wpm_label = lv_label_create(widget->obj);
     lv_obj_set_style_text_font(widget->wpm_label, &lv_font_unscii_16, 0);
-    lv_obj_set_width(widget->wpm_label, 26);
+    lv_obj_set_width(widget->wpm_label, LV_SIZE_CONTENT);
     lv_obj_set_pos(widget->wpm_label, 2, 1);
     lv_label_set_text(widget->wpm_label, "0");
 
     widget->unit_label = lv_label_create(widget->obj);
     lv_obj_set_style_text_font(widget->unit_label, &lv_font_unscii_8, 0);
     lv_label_set_text(widget->unit_label, "wpm");
-    lv_obj_set_pos(widget->unit_label, 32, 8);
+    lv_obj_set_pos(widget->unit_label, 36, 8);
 
     lv_style_init(&line_style);
     lv_style_set_line_width(&line_style, 1);

@@ -4,7 +4,10 @@
 #include "eight_ball.h"
 
 #ifndef CONFIG_ZMK_DONGLE_DISPLAY_EIGHT_BALL_STEP_DIV
-#define CONFIG_ZMK_DONGLE_DISPLAY_EIGHT_BALL_STEP_DIV 8
+#define CONFIG_ZMK_DONGLE_DISPLAY_EIGHT_BALL_STEP_DIV 24
+#endif
+#ifndef CONFIG_ZMK_DONGLE_DISPLAY_EIGHT_BALL_MIN_FRAME_MS
+#define CONFIG_ZMK_DONGLE_DISPLAY_EIGHT_BALL_MIN_FRAME_MS 60
 #endif
 
 LV_IMG_DECLARE(eight_ball_00);
@@ -30,25 +33,36 @@ int zmk_widget_eight_ball_init(struct zmk_widget_eight_ball *widget, lv_obj_t *p
     widget->obj = lv_img_create(parent);
     widget->accum = 0;
     widget->frame = 0;
+    widget->last_frame_ms = 0;
     lv_img_set_src(widget->obj, frames[0]);
     return 0;
 }
 
 lv_obj_t *zmk_widget_eight_ball_obj(struct zmk_widget_eight_ball *widget) { return widget->obj; }
 
-void zmk_widget_eight_ball_roll(struct zmk_widget_eight_ball *widget, int32_t delta) {
+void zmk_widget_eight_ball_roll(struct zmk_widget_eight_ball *widget, int32_t delta, int64_t now_ms) {
     const int32_t step = CONFIG_ZMK_DONGLE_DISPLAY_EIGHT_BALL_STEP_DIV;
-    uint8_t before = widget->frame;
+    const int32_t limit = 2 * step;
     widget->accum += delta;
-    while (widget->accum >= step) {
+    if (widget->accum > limit) {
+        widget->accum = limit;
+    } else if (widget->accum < -limit) {
+        widget->accum = -limit;
+    }
+    if (now_ms - widget->last_frame_ms < CONFIG_ZMK_DONGLE_DISPLAY_EIGHT_BALL_MIN_FRAME_MS) {
+        return;
+    }
+    if (widget->accum >= step) {
         widget->accum -= step;
         widget->frame = (widget->frame + 1) % EIGHT_BALL_FRAMES;
-    }
-    while (widget->accum <= -step) {
+    } else if (widget->accum <= -step) {
         widget->accum += step;
         widget->frame = (widget->frame + EIGHT_BALL_FRAMES - 1) % EIGHT_BALL_FRAMES;
+    } else {
+        return;
     }
-    if (widget->frame != before) {
-        lv_img_set_src(widget->obj, frames[widget->frame]);
-    }
+    widget->last_frame_ms = now_ms;
+    lv_img_set_src(widget->obj, frames[widget->frame]);
 }
+
+void zmk_widget_eight_ball_settle(struct zmk_widget_eight_ball *widget) { widget->accum = 0; }

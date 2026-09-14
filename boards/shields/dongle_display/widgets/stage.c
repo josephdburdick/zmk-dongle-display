@@ -28,6 +28,9 @@ static void show(struct zmk_widget_stage *widget, enum stage_state state) {
     if (state == widget->shown) {
         return;
     }
+    if (widget->shown == STAGE_SCROLLING) {
+        zmk_widget_eight_ball_settle(&widget->ball);
+    }
     bool typing = state == STAGE_TYPING;
 #if IS_ENABLED(CONFIG_ZMK_DONGLE_DISPLAY_TYPING_STATS)
     if (typing && widget->shown == STAGE_IDLE) {
@@ -97,8 +100,9 @@ static void scroll_work_cb(struct k_work *work) {
     }
     struct zmk_widget_stage *widget;
     SYS_SLIST_FOR_EACH_CONTAINER(&widgets, widget, node) {
-        show(widget, stage_fsm_scroll_motion(&widget->fsm, k_uptime_get()));
-        zmk_widget_eight_ball_roll(&widget->ball, delta);
+        int64_t now = k_uptime_get();
+        show(widget, stage_fsm_scroll_motion(&widget->fsm, now));
+        zmk_widget_eight_ball_roll(&widget->ball, delta, now);
     }
 }
 

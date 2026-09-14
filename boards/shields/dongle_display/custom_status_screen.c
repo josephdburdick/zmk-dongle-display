@@ -77,7 +77,7 @@ lv_obj_t *zmk_display_status_screen() {
 
 #if IS_ENABLED(CONFIG_ZMK_DONGLE_DISPLAY_EIGHT_BALL)
     zmk_widget_stage_init(&stage_widget, screen);
-    lv_obj_align(zmk_widget_stage_obj(&stage_widget), LV_ALIGN_BOTTOM_RIGHT, 0, -7);
+    lv_obj_align(zmk_widget_stage_obj(&stage_widget), LV_ALIGN_BOTTOM_RIGHT, 0, -9);
 #elif IS_ENABLED(CONFIG_ZMK_DONGLE_DISPLAY_BONGO_CAT)
     zmk_widget_bongo_cat_init(&bongo_cat_widget, screen);
     lv_obj_align(zmk_widget_bongo_cat_obj(&bongo_cat_widget), LV_ALIGN_BOTTOM_RIGHT, 0, -7);

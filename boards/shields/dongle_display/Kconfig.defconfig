@@ -61,7 +61,12 @@ config ZMK_DONGLE_DISPLAY_SCROLL_TIMEOUT_MS
 config ZMK_DONGLE_DISPLAY_EIGHT_BALL_STEP_DIV
     int "Pointer counts per animation frame"
     depends on ZMK_DONGLE_DISPLAY_EIGHT_BALL
-    default 8
+    default 24
+
+config ZMK_DONGLE_DISPLAY_EIGHT_BALL_MIN_FRAME_MS
+    int "Minimum milliseconds between eight-ball frame changes"
+    depends on ZMK_DONGLE_DISPLAY_EIGHT_BALL
+    default 60
 
 config ZMK_DONGLE_DISPLAY_EIGHT_BALL_AXIS_X
     bool "Roll the eight-ball from horizontal pointer motion instead of vertical"
