@@ -29,6 +29,43 @@ config ZMK_DONGLE_DISPLAY_BONGO_CAT
     bool "Display the Bongo Cat widget"
     default y
 
+config ZMK_DONGLE_DISPLAY_EIGHT_BALL
+    bool "Display the eight-ball / typing-stats stage instead of the cat"
+    default n
+    select LV_FONT_UNSCII_16
+    select LV_USE_LINE
+    select ZMK_WPM
+
+config ZMK_DONGLE_DISPLAY_TYPING_STATS
+    bool "Show WPM and a sparkline while typing"
+    depends on ZMK_DONGLE_DISPLAY_EIGHT_BALL
+    default y
+
+config ZMK_DONGLE_DISPLAY_SCROLL_LAYER
+    int "Layer that puts the pointer into scroll mode (the eight-ball rolls while it is active)"
+    depends on ZMK_DONGLE_DISPLAY_EIGHT_BALL
+    default 1
+
+config ZMK_DONGLE_DISPLAY_TYPING_TIMEOUT_MS
+    int "Milliseconds without a key press before the stage returns to idle"
+    depends on ZMK_DONGLE_DISPLAY_EIGHT_BALL
+    default 4000
+
+config ZMK_DONGLE_DISPLAY_SCROLL_TIMEOUT_MS
+    int "Milliseconds without pointer motion before the stage returns to idle"
+    depends on ZMK_DONGLE_DISPLAY_EIGHT_BALL
+    default 1000
+
+config ZMK_DONGLE_DISPLAY_EIGHT_BALL_STEP_DIV
+    int "Pointer counts per animation frame"
+    depends on ZMK_DONGLE_DISPLAY_EIGHT_BALL
+    default 8
+
+config ZMK_DONGLE_DISPLAY_EIGHT_BALL_AXIS_X
+    bool "Roll the eight-ball from horizontal pointer motion instead of vertical"
+    depends on ZMK_DONGLE_DISPLAY_EIGHT_BALL
+    default n
+
 config ZMK_DONGLE_DISPLAY_MODIFIERS
     bool "Display the modifiers widget"
     default y
