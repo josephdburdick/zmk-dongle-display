@@ -68,6 +68,11 @@ config ZMK_DONGLE_DISPLAY_EIGHT_BALL_MIN_FRAME_MS
     depends on ZMK_DONGLE_DISPLAY_EIGHT_BALL
     default 60
 
+config ZMK_DONGLE_DISPLAY_EIGHT_BALL_MAX_FRAMES_PER_UPDATE
+    int "Maximum frames the eight-ball may advance per update (higher = faster top speed)"
+    depends on ZMK_DONGLE_DISPLAY_EIGHT_BALL
+    default 3
+
 config ZMK_DONGLE_DISPLAY_EIGHT_BALL_AXIS_X
     bool "Roll the eight-ball from horizontal pointer motion instead of vertical"
     depends on ZMK_DONGLE_DISPLAY_EIGHT_BALL
