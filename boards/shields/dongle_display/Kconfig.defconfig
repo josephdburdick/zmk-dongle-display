@@ -45,6 +45,8 @@ config ZMK_DONGLE_DISPLAY_SCROLL_LAYER
     int "Layer that puts the pointer into scroll mode (the eight-ball rolls while it is active)"
     depends on ZMK_DONGLE_DISPLAY_EIGHT_BALL
     default 1
+    help
+        Set to -1 to roll the eight-ball on any pointer motion regardless of layer.
 
 config ZMK_DONGLE_DISPLAY_TYPING_TIMEOUT_MS
     int "Milliseconds without a key press before the stage returns to idle"

@@ -114,9 +114,11 @@ static void pointer_cb(struct input_event *evt, void *user_data) {
     if (evt->type != INPUT_EV_REL || evt->code != axis || evt->value == 0) {
         return;
     }
+#if CONFIG_ZMK_DONGLE_DISPLAY_SCROLL_LAYER >= 0
     if (!zmk_keymap_layer_active(CONFIG_ZMK_DONGLE_DISPLAY_SCROLL_LAYER)) {
         return;
     }
+#endif
     atomic_add(&pending_delta, evt->value);
     if (zmk_display_is_initialized()) {
         k_work_submit_to_queue(zmk_display_work_q(), &scroll_work);
@@ -134,6 +136,7 @@ int zmk_widget_stage_init(struct zmk_widget_stage *widget, lv_obj_t *parent) {
     lv_obj_set_size(widget->obj, STAGE_W, STAGE_H);
     lv_obj_set_style_pad_all(widget->obj, 0, 0);
     lv_obj_set_style_border_width(widget->obj, 0, 0);
+    lv_obj_set_style_bg_opa(widget->obj, LV_OPA_TRANSP, 0);
     lv_obj_remove_flag(widget->obj, LV_OBJ_FLAG_SCROLLABLE);
 
     zmk_widget_eight_ball_init(&widget->ball, widget->obj);

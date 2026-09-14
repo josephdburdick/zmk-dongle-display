@@ -75,16 +75,20 @@ int zmk_widget_typing_stats_init(struct zmk_widget_typing_stats *widget, lv_obj_
     lv_obj_set_size(widget->obj, 84, 44);
     lv_obj_set_style_pad_all(widget->obj, 0, 0);
     lv_obj_set_style_border_width(widget->obj, 0, 0);
+    lv_obj_set_style_bg_opa(widget->obj, LV_OPA_TRANSP, 0);
+    lv_obj_remove_flag(widget->obj, LV_OBJ_FLAG_SCROLLABLE);
 
+    /* Fixed positions: the number grows to three 8 px glyphs, the unit sits past that. */
     widget->wpm_label = lv_label_create(widget->obj);
     lv_obj_set_style_text_font(widget->wpm_label, &lv_font_unscii_16, 0);
-    lv_obj_align(widget->wpm_label, LV_ALIGN_TOP_LEFT, 2, 0);
+    lv_obj_set_width(widget->wpm_label, 26);
+    lv_obj_set_pos(widget->wpm_label, 2, 1);
     lv_label_set_text(widget->wpm_label, "0");
 
     widget->unit_label = lv_label_create(widget->obj);
     lv_obj_set_style_text_font(widget->unit_label, &lv_font_unscii_8, 0);
     lv_label_set_text(widget->unit_label, "wpm");
-    lv_obj_align_to(widget->unit_label, widget->wpm_label, LV_ALIGN_OUT_RIGHT_BOTTOM, 3, 0);
+    lv_obj_set_pos(widget->unit_label, 32, 8);
 
     lv_style_init(&line_style);
     lv_style_set_line_width(&line_style, 1);
