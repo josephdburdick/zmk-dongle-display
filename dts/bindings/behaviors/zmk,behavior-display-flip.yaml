@@ -1,0 +1,8 @@
+# Copyright (c) 2026 The ZMK Contributors
+# SPDX-License-Identifier: MIT
+
+description: Toggle a 180-degree rotation of the dongle display (saved across reboots)
+
+compatible: "zmk,behavior-display-flip"
+
+include: zero_param.yaml
